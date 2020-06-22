@@ -34,10 +34,10 @@ sock.bind(address)
 DSN = 'dbname=bitalino user=postgres host=localhost port=18001'
 
 #----------			Variables - MQTT			----------
-ORG = "t5d7s9"
-DEVICE_TYPE = "raspberry" 
-TOKEN = "BITalino_Server"
-DEVICE_ID = "b827eb101d5d"
+ORG = "xxxxxx" # Organization
+DEVICE_TYPE = "xxxxxxx" # Devide's name
+TOKEN = "xxxxxxxx" # Device's token
+DEVICE_ID = "xxxxxxxxxxxx" # Device's ID
 
 server = ORG + ".messaging.internetofthings.ibmcloud.com";
 event = "iot-2/evt/bitalino/fmt/json";
