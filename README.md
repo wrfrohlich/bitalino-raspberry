@@ -8,14 +8,6 @@ This topic introduce the project developed, describing each part of the topology
 
 ![Topology](https://github.com/wrfrohlich/BITalino-Raspberry/blob/master/figures/topology.png)
 
-1.1.1 - Docker:
-
-![Docker](https://github.com/wrfrohlich/BITalino-Raspberry/blob/master/figures/docker.png)
-
-1.1.2 - IBM Watson:
-
-![IBM](https://github.com/wrfrohlich/BITalino-Raspberry/blob/master/figures/ibm.png)
-
 #### 1.2 - Ports:
 In this project all ports are defined and changed into other range to avoid conflict and security.
 
@@ -65,13 +57,15 @@ First of all it is necessary install and configure the libraries for the environ
 
 * Install Numpy: `sudo apt-get install python3-numpy`
 
-* Install Numpy: `sudo apt-get install python3-pandas`
+* Install Pandas: `sudo apt-get install python3-pandas`
 
-* Install Numpy: `sudo apt-get install python3-biosppy`
+* Install Biosppy: `sudo apt-get install python3-biosppy`
 
 #### 2.2 - Using the Docker Compose:
 
 After to prepare the enviroment to use the docker compose it is necessary to run the containers to start the database and the dashboard. The file that defines the parameters for each service is the 'docker-compose.yml', in this file is defined the network amoung services that will be the `'my-network'` with brigde caracteristic. In the next topic is defined the service, for each service is assigned an image that will be based, for the web service will be used the image `grafana/grafana:7.0.0` and the service database will use the image `postgres:9.6`.
+
+![Docker](https://github.com/wrfrohlich/BITalino-Raspberry/blob/master/figures/docker.png)
 
 In each service, also is declareted different ports with external visibility. To run the docker compose the path must be changed in the bash with to the folder that are the files of this project, in sequence using `cd docker` and `docker-compose up -d` to run the containers.
 
@@ -87,15 +81,19 @@ After initialized the Grafana's container, it is necessary to set the dashboard 
 
 #### 2.5 - Using the Processing (__Python__):
 
-In the first part of the code are defined the libraries, in the second part are difined the global variables of the code, the function `socket.socket(socket.AF_INET, socket.SOCK_DGRAM)` define the protocol and `bind('',18002)` is used to define the IP address and port of the socket server. In the third part of the code is defined the functions, in this part there is the `'register_datasabe'` function used to make the connection with the database and post the data. The variable `DSN = 'dbname=bitalino user=postgres host=database'` define the database, user and host that will be used and the variable `SQL = 'INSERT INTO patients (name, ecg, eda, time) VALUES (%s, %s, %s, %s)'` define what it is the table that will be saved all data and categories.
+The Python code is responsable to receive all data from the C++ code via socket. In addition to receiving the data, this service also process and stores in the database, it is possible to define some alarms to send to cloud, in this case, the cloud plataform is the Internet of Thing Plataform from IBM, with the MQTT protocol.
 
-Finally, in the fourth part is the main function, a loop that opens the socket and receives the information from the acquisition application. Each data is received from a different ports and theses data is received and converted into information in the correct format. After all data are received, the program call the function `'register_datasabe'` to make the connection with the database and post the data.
+In the first part of the code are defined the libraries, in the second part are difined the global variables of the code, the function `socket.socket(socket.AF_INET, socket.SOCK_DGRAM)` define the protocol and `bind('',18002)` is used to define the IP address and port of the socket server, after is defined the `DSN = 'dbname=bitalino user=postgres host=localhost port=18001'` to define the address of database and for last, the variables of the IBM Watson server. In the third part of the code is defined the functions, in this part there are one function to save a CSV file with all raw data in the main folder of the application, the second and thirdy functions are responsable to generate the processed data, in sequence, more three functions, one for each register in the database and finally, the function responsable to make send the event to the cloud, in this case is set to send in the final of the processing.
+
+Finally, in the fourth part is the main function, a loop that opens the socket and receives the information from the acquisition application. Each data is received from the C++ code with a different caracter for identify the kind of data and is converted into the correct format. When the Python code receive a determinated signal the code call the respective function to do the action.
+
+![IBM](https://github.com/wrfrohlich/BITalino-Raspberry/blob/master/figures/ibm.png)
 
 #### 2.5 - Using the Acquisition (__C++__):
 
 The first step to use the application it is define the bluetooth address in the acquisition.cpp file in the variable `BITalino dev("xx:xx:xx:xx:xx:xx")`. In the acquisition.cpp file there are others options to configure the system, for example the channels that will be monitored (channel 1 = ECG; channel 2 = EDA) or the port of the sockets, all these options are described in the code.
 
-The next step must change the path in the bash to the path with all files, now it is possible generate the executable file using the command `make`. After this, the application is able to use with the command `./acquisition`. Turn on the BITalino and fill  name and last name to start the acquisition. To finish the acquisition it is necessary tap the 'enter' in the keyboard to stop the acquisition and disconnect properly the BITalino.
+The next step must change the path in the bash to the path with all files, now it is possible generate the executable file using the command `make`. After this, the application is able to use with the command `./acquisition`. Turn on the BITalino and fill name and last name to start the acquisition. To finish the acquisition it is necessary tap the 'enter' in the keyboard to stop the acquisition and disconnect properly the BITalino.
 
 ## 3 - Useful Commands:
 
