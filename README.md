@@ -6,7 +6,15 @@ This topic introduce the project developed, describing each part of the topology
 
 #### 1.1 - Topology:
 
-![Topology](https://github.com/wrfrohlich/BITalino_Server/blob/V1.0/figures/Topology.png)
+![Topology](https://github.com/wrfrohlich/BITalino-Raspberry/blob/master/figures/topology.png)
+
+1.1.1 - Docker:
+
+![Docker](https://github.com/wrfrohlich/BITalino-Raspberry/blob/master/figures/docker.png)
+
+1.1.2 - IBM Watson:
+
+![IBM](https://github.com/wrfrohlich/BITalino-Raspberry/blob/master/figures/ibm.png)
 
 #### 1.2 - Ports:
 In this project all ports are defined and changed into other range to avoid conflict and security.
@@ -63,11 +71,11 @@ First of all it is necessary install and configure the libraries for the environ
 
 #### 2.2 - Using the Docker Compose:
 
+![Docker-compose](https://github.com/wrfrohlich/BITalino-Raspberry/blob/master/figures/docker.png)
+
 After to prepare the enviroment to use the docker compose it is necessary to run the containers to start the application to processing the data, the database and the dashboard. The file that defines the parameters for each service is the 'docker-compose.yml', in this file is defined the network amoung services that will be the `'my-network'` with brigde caracteristic. In the next topic is defined the service, for each service is assigned an image that will be based, for the web service will be used the image `grafana/grafana:7.0.0`, the service database will use the image `postgres:9.6` and the processing service will use the image `python:3.8.3`.
 
 In each service, also is declareted different ports with external visibility. To run the docker compose the path must be changed in the bash with to the folder that are the files of this project, in sequence using `cd Docker` and `docker-compose up -d` to run the containers.
-
-![Docker-compose](https://github.com/wrfrohlich/BITalino_Server/blob/V1.0/figures/Docker-compose.png)
 
 #### 2.3 - Using the Database (__PostgreSQL__):
 
