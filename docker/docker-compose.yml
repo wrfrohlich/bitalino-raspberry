@@ -1,0 +1,58 @@
+#----------------------------------------------------------------------------------------------------------
+#
+#			Name: Eng. William da Rosa Frohlich
+#
+#			Project: Database and Grafana for BITalino Server
+#
+#			Date: 2020.06.13
+#
+#----------------------------------------------------------------------------------------------------------
+#----------			Version			----------
+
+version: '3'
+
+#----------------------------------------------------------------------------------------------------------
+#----------			Volumes			----------
+
+volumes:
+    data:
+
+#----------------------------------------------------------------------------------------------------------
+#----------			Networks			----------
+
+networks:
+# Create the Network for the Docker-Compose
+    my-network:
+        driver: bridge
+
+#----------------------------------------------------------------------------------------------------------
+#----------			Services			----------
+
+services:
+# Create the Database
+    database:
+        image: postgres:9.6
+        environment:
+            POSTGRES_HOST_AUTH_METHOD: "trust"
+        volumes:
+            - ./database:/database
+            - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql # Define the database and the tables
+        ports:
+            - 18001:5432
+        networks:
+            - my-network
+
+# Create the Dashboard
+    web:
+        image: grafana/grafana:7.0.0
+        volumes:
+            - ./web/datasources/datasource.yaml:/etc/grafana/provisioning/datasources/datasource.yaml # Link with the database
+            - ./web/dashboards:/etc/grafana/provisioning/dashboards # Insert and initialize the dashboards
+        ports:
+            - 18000:3000
+        networks:
+            - my-network
+        depends_on:
+            - database
+
+#----------------------------------------------------------------------------------------------------------

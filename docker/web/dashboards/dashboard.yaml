@@ -1,0 +1,35 @@
+#----------------------------------------------------------------------------------------------------------
+#
+#			Name: Eng. William da Rosa Frohlich
+#
+#			Project: Dashboard - Grafana
+#
+#			Date: 2020.06.13
+#
+#----------------------------------------------------------------------------------------------------------
+
+# Config File Version
+apiVersion: 1
+
+providers:
+# <string> Unique provider name. Required
+  - name: Eng. William da Rosa Frohlich
+# <int> Org ID. Default to 1
+    orgId: 1
+# <string> Name of the Dashboard Folder.
+    folder: ''
+# <string> Folder UID. will be Automatically Generated if not Specified
+    folderUid: ''
+# <string> Provider type. Default to 'file'
+    type: file
+# <bool> Disable Dashboard Deletion
+    disableDeletion: false
+# <bool> Enable Dashboard Editing
+    editable: true
+# <int> How often Grafana will Scan for Changed Dashboards
+    updateIntervalSeconds: 10
+# <bool> Allow Updating Provisioned Dashboards from the UI
+    allowUiUpdates: false
+    options:
+# <string, required> Path to Dashboard Files on disk. Required when using the 'file' type
+      path: /etc/grafana/provisioning/dashboards

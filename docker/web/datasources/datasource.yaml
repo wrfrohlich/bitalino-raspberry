@@ -1,0 +1,67 @@
+#----------------------------------------------------------------------------------------------------------
+#
+#			Name: Eng. William da Rosa Frohlich
+#
+#			Project: Datasource - Grafana
+#
+#			Date: 2020.06.13
+#
+#----------------------------------------------------------------------------------------------------------
+
+# Config File Version
+apiVersion: 1
+
+# List of Datasources that should be Deleted from the Database
+deleteDatasources:
+  - name: PostgreSQL
+    orgId: 1
+
+# List of Datasources to Insert/Update Depending
+# What's Available in the Database
+datasources:
+# <string, required> Name of the Datasource. Required
+  - name: PostgreSQL
+# <string, required> Datasource Type. Required
+    type: postgres
+# <string, required> Access Mode. Proxy or Direct (Server or Browser in the UI). Required
+    access: proxy
+# <int> org id. will default to orgId 1 if not specified
+    orgId: 1
+# <string> custom UID which can be used to reference this datasource in other parts of the configuration, if not specified will be generated automatically
+    uid: my_unique_uid
+# <string> url
+    url: database
+# <string> Deprecated, use secureJsonData.password
+    password: postgres
+# <string> Database User, if used
+    user: postgres
+# <string> Database Name, if used
+    database: bitalino
+# <bool> Enable/Disable Basic Auth
+    basicAuth: false
+# <string> Basic auth Username
+    basicAuthUser:
+# <string> Deprecated, use secureJsonData.basicAuthPassword
+    basicAuthPassword:
+# <bool> Enable/disable with credentials headers
+    withCredentials: false
+# <bool> Mark as default datasource. Max one per org
+    isDefault: false
+# <map> Fields that will be Converted to JSON and Stored in JSonData
+    jsonData:
+      sslmode: "disable"
+      graphiteVersion: '1.1'
+      tlsAuth: true
+      tlsAuthWithCACert: true
+# <string> JSON object of Data that will be Encrypted.
+    secureJsonData:
+      tlsCACert: '...'
+      tlsClientCert: '...'
+      tlsClientKey: '...'
+# <string> Database Password, if Used
+      password:
+# <string> Basic auth Password
+      basicAuthPassword:
+    version: 1
+# <bool> Allow users to edit Datasources from the UI.
+    editable: true
