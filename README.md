@@ -25,6 +25,8 @@ First of all it is necessary install and configure the libraries for the environ
 
 2.1.1 - Bluetooth:
 
+* Install the bluetooth library to C/C++: `sudo apt-get install libbluetooth-dev`
+
 * Install the bluetooth library: `sudo apt-get install pi-bluetooth`
 
 * Start the configuration: `sudo bluetoothctl`
